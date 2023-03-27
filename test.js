@@ -1,11 +1,14 @@
+import { executablePath } from 'puppeteer';
+
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const pluginProxy = require('puppeteer-extra-plugin-proxy');
-const fetch = require("node-fetch");
+// const fetch = require("node-fetch");
 const sqlite3 = require('sqlite3').verbose();
 console.log('Program started');
 var axios = require('axios');
 const userAgents = require('user-agents');
+
 
 puppeteer.use(StealthPlugin());
 puppeteer.use(require('puppeteer-extra-plugin-anonymize-ua')())
@@ -175,7 +178,8 @@ async function launchTraffic(loginId, isMobile){
         '--disable-setuid-sandbox',
         `--proxy-server=http://${proxyHost}:${proxyPort}`
       ],
-      headless: false
+      headless: false,
+      executablePath: executablePath(),
     });
 
     let page = await browser.newPage();
